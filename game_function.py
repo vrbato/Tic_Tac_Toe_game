@@ -24,8 +24,12 @@ def game():
     while True:
         tic_tac_toe_board()
         print(SEPARATOR)
-        player1_input()
+        player1 = user_input()
         print(SEPARATOR)
+        if not check_input(player1):
+            print(f"{'Try again!':^50}")
+            continue
+
 
 def tic_tac_toe_board():
     board = [
@@ -33,11 +37,40 @@ def tic_tac_toe_board():
         ["-", "-", "-"],
         ["-", "-", "-"],
     ]
-    for row in board:
-        for item in row:
-            print(f"{item}", end="")
-        print()
+    for row in board: #nejdříve procházím řádek
+        for item in row: #potom procházím položky na řádku
+            print(f"{item}", end="") #aby mi to vytisklo položky vedle sebe
+        print() #aby mi to vytisklo řádky pod sebe
 
-def player1_input() -> str:
-    player1_input = input("Player 1 | Please enter your move 1 - 9 or Q for quit:")
-    return player1_input
+def user_input() -> str:
+    user_input = input("Player 1 | Please enter your move 1 - 9 or Q for quit:")
+    return user_input
+
+def check_input(player_input):
+    #chek if the input is number
+    if not isnum(player_input):
+        return False
+    player_input = int(player_input)
+
+    #check if the value is in range 1 - 9
+    if not correct_range(player_input):
+        return False
+    return True
+
+def isnum(player_input):
+    if not player_input.isnumeric():
+        print(f"{'The input is not a number!':^50}")
+        return False
+    else:
+        return True
+
+def correct_range(player_input):
+    if player_input > 9 or player_input < 1:
+        print(f"{'Input out of the range!':^50}")
+        return False
+    else:
+        return True
+
+
+
+

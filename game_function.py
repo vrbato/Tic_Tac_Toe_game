@@ -8,7 +8,6 @@ BOARD = [
     ]
 
 
-
 #welcome message and rules
 def welcome_rules ():
     print(f"{SEPARATOR}",
@@ -51,7 +50,11 @@ def game():
         if is_win(player_sign,BOARD):
             print(f"Congratulation player: {player_sign.upper()} won!")
             break
-        run_out_of_turns(TURN)
+        TURN += 1
+        if TURN == 9:
+            print(f"{'Tie! Thanks for the game. Bye!':^50}")
+            break
+        print(TURN)
 
         PLAYER = not PLAYER
 
@@ -164,11 +167,6 @@ def check_diagonal(user,board):
     else:
         return False
 
-def run_out_of_turns(turn):
-    turn += 1
-    if turn == 9:
-        print(f"{'Tie! Thanks for the game. Bye!':^50}")
-        exit()
 
 
 

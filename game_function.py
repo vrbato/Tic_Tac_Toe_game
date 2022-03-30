@@ -1,5 +1,5 @@
 #
-SEPARATOR = "=" * 50
+SEPARATOR = "=" * 62
 
 BOARD = [
         ["-", "-", "-"],
@@ -34,17 +34,17 @@ def game():
         player_sign = current_player(PLAYER)
         tic_tac_toe_board(BOARD)
         print(SEPARATOR)
-        player = user_input()
+        player = user_input(player_sign)
         print(SEPARATOR)
         quit_game(player)
         if not check_input(player):
-            print(f"{'Try again!':^50}")
+            print(f"{'Try again!':^62}")
             continue
         player = int(player) - 1
         position = board_position(player)
         #BOARD[0][0] = "x" test zda to funguje a hlásí to obsazené místo v hracím poli
         if is_taken(position,BOARD):
-            print(f"{'Try again!':^50}")
+            print(f"{'Try again!':^62}")
             continue
         add_input_to_board(position,BOARD,player_sign)
         if is_win(player_sign,BOARD):
@@ -52,21 +52,24 @@ def game():
             break
         TURN += 1
         if TURN == 9:
-            print(f"{'Tie! Thanks for the game. Bye!':^50}")
+            print(f"{'Tie! Thanks for the game. Bye!':^62}")
             break
-        print(TURN)
 
         PLAYER = not PLAYER
 
 def tic_tac_toe_board(board):
     for row in board: #nejdříve procházím řádek
         for item in row: #potom procházím položky na řádku
-            print(f"{item}", end="") #aby mi to vytisklo položky vedle sebe
+            print(f"|{item:^5}|", end="") #aby mi to vytisklo položky vedle sebe
         print() #aby mi to vytisklo řádky pod sebe
 
-def user_input() -> str:
-    user_input = input("Player 1 | Please enter your move 1 - 9 or Q for quit:")
-    return user_input
+def user_input(player_sign) -> str:
+    if player_sign == "x":
+        user_input_x = input("Player X turns | Please enter your move 1 - 9 or Q for quit:")
+        return user_input_x
+    else:
+        user_input_y = input("Player O turns | Please enter your move 1 - 9 or Q for quit:")
+        return user_input_y
 
 def check_input(player_input):
     #chek if the input is number
@@ -81,21 +84,21 @@ def check_input(player_input):
 
 def isnum(player_input):
     if not player_input.isnumeric():
-        print(f"{'The input is not a number!':^50}")
+        print(f"{'The input is not a number!':^62}")
         return False
     else:
         return True
 
 def correct_range(player_input):
     if player_input > 9 or player_input < 1:
-        print(f"{'Input out of the range!':^50}")
+        print(f"{'Input out of the range!':^62}")
         return False
     else:
         return True
 
 def quit_game(player_input):
     if player_input.lower() == "q":
-        print(f"{'Thank you for the game':^50}")
+        print(f"{'Thank you for the game':^62}")
         return exit()
 
 #určení pozice zadané hráčem
@@ -111,7 +114,7 @@ def is_taken(position, board):
     row = position[0] #beru z tuplu index 0 a index 1, který určuje pozici zadanou hráče řádek,sloupec
     column = position[1]
     if board[row][column] != "-": #ověřuji pokud je stále prázdno
-        print(f"{'This position is taken.':^50}")
+        print(f"{'This position is taken.':^62}")
         return True
     else:
         return False
